@@ -6,10 +6,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day1PartTwo {
+public class Day1Part2 {
     public static void main(String[] args) {
         List<String> numbers = FileUtils.readTxt(new File("day1\\inputPart2.txt"));
-
         if (numbers == null) {
             return;
         }
