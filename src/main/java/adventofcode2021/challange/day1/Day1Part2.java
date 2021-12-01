@@ -10,10 +10,6 @@ import java.util.stream.IntStream;
 public class Day1Part2 {
     public static void main(String[] args) {
         List<String> numbers = FileUtils.readTxt(new File("day1\\inputPart2.txt"));
-        if (numbers == null) {
-            return;
-        }
-
         int incrementCount = 0;
         int prevSum = 0;
         for (int i = 0; i < numbers.size() - 2; i++) {

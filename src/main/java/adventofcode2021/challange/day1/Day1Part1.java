@@ -9,10 +9,6 @@ public class Day1Part1 {
 
     public static void main(String[] args) {
         List<String> numbers = FileUtils.readTxt(new File("day1\\input.txt"));
-        if (numbers == null) {
-            return;
-        }
-
         int incrementCount = 0;
         for (int i = 1; i < numbers.size(); i++) {
             int currentNumber = Integer.valueOf(numbers.get(i));
