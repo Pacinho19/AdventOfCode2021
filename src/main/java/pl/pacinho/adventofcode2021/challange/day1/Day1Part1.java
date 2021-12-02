@@ -1,14 +1,20 @@
 package pl.pacinho.adventofcode2021.challange.day1;
 
+import pl.pacinho.adventofcode2021.challange.CalculateI;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
 import java.io.File;
 import java.util.List;
 
-public class Day1Part1 {
+public class Day1Part1 implements CalculateI {
 
     public static void main(String[] args) {
-        List<String> numbers = FileUtils.readTxt(new File("day1\\input.txt"));
+        System.out.println(new Day1Part1().calculate("day1\\input.txt"));
+    }
+
+    @Override
+    public int calculate(String filePath) {
+        List<String> numbers = FileUtils.readTxt(new File(filePath));
         int incrementCount = 0;
         for (int i = 1; i < numbers.size(); i++) {
             int currentNumber = Integer.parseInt(numbers.get(i));
@@ -16,6 +22,6 @@ public class Day1Part1 {
             if (currentNumber > previousNumber)
                 incrementCount++;
         }
-        System.out.println(incrementCount);
+        return incrementCount;
     }
 }

@@ -7,6 +7,6 @@ public class Day2Part1Test extends TestCase {
 
     @Test
     public void testCalculate() {
-        assertEquals("Good !", 150, Day2Part1.calculate("day2\\inputExample.txt"));
+        assertEquals("Good !", 150, new Day2Part1().calculate("day2\\inputExample.txt"));
     }
 }

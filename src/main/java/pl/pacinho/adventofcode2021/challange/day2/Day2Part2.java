@@ -1,14 +1,16 @@
 package pl.pacinho.adventofcode2021.challange.day2;
 
+import pl.pacinho.adventofcode2021.challange.CalculateI;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
 import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Day2Part2 {
+public class Day2Part2 implements CalculateI {
 
-    public static int calculate(String filePath) {
+    @Override
+    public int calculate(String filePath) {
         List<Move> moves = FileUtils.readTxt(new File(filePath))
                 .stream()
                 .map(l -> l.split(" "))
@@ -35,6 +37,6 @@ public class Day2Part2 {
     }
 
     public static void main(String[] args) {
-        System.out.println(calculate("day2\\input.txt"));
+        System.out.println(new Day2Part2().calculate("day2\\input.txt"));
     }
 }
