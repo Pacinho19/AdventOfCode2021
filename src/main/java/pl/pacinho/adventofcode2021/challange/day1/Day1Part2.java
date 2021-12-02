@@ -10,7 +10,7 @@ import java.util.List;
 public class Day1Part2 implements CalculateI {
 
     public static void main(String[] args) {
-        System.out.println(new Day2Part1().calculate("day2\\input.txt"));
+        System.out.println(new Day1Part2().calculate("day2\\input.txt"));
     }
 
     @Override
