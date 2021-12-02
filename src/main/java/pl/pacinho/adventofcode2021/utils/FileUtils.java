@@ -1,4 +1,4 @@
-package adventofcode2021.utils;
+package pl.pacinho.adventofcode2021.utils;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,11 +1,9 @@
-package adventofcode2021.challange.day1;
+package pl.pacinho.adventofcode2021.challange.day1;
 
-import adventofcode2021.utils.FileUtils;
+import pl.pacinho.adventofcode2021.utils.FileUtils;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Day1Part2 {
     public static void main(String[] args) {
