@@ -64,11 +64,11 @@ public class Day5Part2 implements CalculateI {
             for (int i = 0; i <= (Math.abs(aX - bX)); i++) {
                 out.add(aX - i + "," + (aY - i));
             }
-        } else if (aX < bX && aY > bY) {
+        } else if (aX < bX) {
             for (int i = 0; i <= (Math.abs(aX - bX)); i++) {
                 out.add(aX + i + "," + (aY - i));
             }
-        } else if (aX > bX && aY < bY) {
+        } else {
             for (int i = 0; i <= (Math.abs(aX - bX)); i++) {
                 out.add(aX - i + "," + (aY + i));
             }
