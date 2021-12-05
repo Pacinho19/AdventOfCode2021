@@ -19,4 +19,13 @@ public class FileUtils {
         }
         return new ArrayList<>();
     }
+
+    public static String readAsText(File file) {
+        try (Stream<String> stream = Files.lines(Paths.get(file.getAbsolutePath()))) {
+            return stream.collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
