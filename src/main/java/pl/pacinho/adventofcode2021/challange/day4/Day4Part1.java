@@ -4,7 +4,6 @@ import pl.pacinho.adventofcode2021.challange.CalculateI;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ public class Day4Part1 implements CalculateI {
     }
 
     @Override
-    public int calculate(String filePath) {
+    public long calculate(String filePath) {
         String lines = FileUtils.readAsText(new File(filePath));
         List<String> split = Arrays.stream(lines.split("\n\n")).collect(Collectors.toList());
         List<Integer> numbers = Arrays.stream(split.get(0).split(","))
@@ -43,7 +42,7 @@ public class Day4Part1 implements CalculateI {
                 .getCells()
                 .stream()
                 .filter(c -> !c.isSelected())
-                .map(Cell::getValue)
+                .map( Cell::getValue)
                 .reduce(0, Integer::sum)
                 * number;
     }

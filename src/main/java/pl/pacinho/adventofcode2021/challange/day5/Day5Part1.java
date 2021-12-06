@@ -15,7 +15,7 @@ public class Day5Part1 implements CalculateI {
     }
 
     @Override
-    public int calculate(String filePath) {
+    public long calculate(String filePath) {
         List<String> lines = FileUtils.readTxt(new File(filePath));
         List<String> points = new ArrayList<>();
 

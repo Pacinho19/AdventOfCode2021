@@ -1,18 +1,15 @@
 package pl.pacinho.adventofcode2021.challange.day3;
 
 import pl.pacinho.adventofcode2021.challange.CalculateI;
-import pl.pacinho.adventofcode2021.challange.day2.Move;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Day3Part1 implements CalculateI {
 
     @Override
-    public int calculate(String filePath) {
+    public long calculate(String filePath) {
         List<String> lines = FileUtils.readTxt(new File(filePath));
 
         StringBuilder gammaRate = new StringBuilder();

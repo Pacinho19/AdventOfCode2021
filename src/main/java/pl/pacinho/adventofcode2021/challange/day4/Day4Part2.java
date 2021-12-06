@@ -15,7 +15,7 @@ public class Day4Part2 implements CalculateI {
     }
 
     @Override
-    public int calculate(String filePath) {
+    public long calculate(String filePath) {
         String lines = FileUtils.readAsText(new File(filePath));
         List<String> split = Arrays.stream(lines.split("\n\n")).collect(Collectors.toList());
         List<Integer> numbers = Arrays.stream(split.get(0).split(","))

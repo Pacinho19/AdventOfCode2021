@@ -13,7 +13,7 @@ public class Day1Part1 implements CalculateI {
     }
 
     @Override
-    public int calculate(String filePath) {
+    public long calculate(String filePath) {
         List<String> numbers = FileUtils.readTxt(new File(filePath));
         int incrementCount = 0;
         for (int i = 1; i < numbers.size(); i++) {

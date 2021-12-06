@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Day2Part1 implements CalculateI {
 
     @Override
-    public int calculate(String filePath) {
+    public long calculate(String filePath) {
         List<Move> moves = FileUtils.readTxt(new File(filePath))
                 .stream()
                 .map(l -> l.split(" "))

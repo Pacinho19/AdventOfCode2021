@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class Day3Part2 implements CalculateI {
 
     @Override
-    public int calculate(String filePath) {
+    public long calculate(String filePath) {
         List<String> lines = FileUtils.readTxt(new File(filePath));
         String oxygenRating = filterLines(lines, 0, true).get(0);
         String co2Rating = filterLines(lines, 0, false).get(0);

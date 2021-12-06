@@ -1,7 +1,6 @@
 package pl.pacinho.adventofcode2021.challange.day1;
 
 import pl.pacinho.adventofcode2021.challange.CalculateI;
-import pl.pacinho.adventofcode2021.challange.day2.Day2Part1;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
 import java.io.File;
@@ -14,7 +13,7 @@ public class Day1Part2 implements CalculateI {
     }
 
     @Override
-    public int calculate(String filePath) {
+    public long calculate(String filePath) {
         List<String> numbers = FileUtils.readTxt(new File(filePath));
         int incrementCount = 0;
         int prevSum = 0;
