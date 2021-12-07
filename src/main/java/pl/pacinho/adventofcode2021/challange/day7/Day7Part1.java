@@ -1,7 +1,13 @@
 package pl.pacinho.adventofcode2021.challange.day7;
 
-import lombok.AllArgsConstructor;
 import pl.pacinho.adventofcode2021.challange.CalculateI;
+import pl.pacinho.adventofcode2021.utils.FileUtils;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Day7Part1 implements CalculateI {
 
@@ -11,7 +17,22 @@ public class Day7Part1 implements CalculateI {
 
     @Override
     public long calculate(String filePath) {
-        return 0;
+        List<Integer> crabs = Arrays.stream(FileUtils.readAsText(new File(filePath))
+                .split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        int maxPosition = crabs.stream().max(Integer::compareTo).get();
+        List<Integer> fuelCosts = IntStream.rangeClosed(1, maxPosition)
+                .mapToObj(i -> moveCrabs(i, crabs))
+                .collect(Collectors.toList());
+        return fuelCosts.stream().min(Integer::compareTo).get();
+    }
+
+    private Integer moveCrabs(int newPos, List<Integer> crabs) {
+        return crabs.stream()
+                .map(cPos -> Math.abs(newPos - cPos))
+                .reduce(0, Integer::sum);
     }
 
 }
