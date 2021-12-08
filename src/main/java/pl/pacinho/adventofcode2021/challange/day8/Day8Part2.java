@@ -46,10 +46,12 @@ public class Day8Part2 implements CalculateI {
         valuesMap.put(sortString(values.stream().filter(s -> s.length() == 7).findFirst().get()), 8);
 
         valuesMap.put(sortString(values.stream().filter(s -> !valuesMap.containsKey((s)) && s.length() == 6 && !allMatch(valuesMap, 7, s)).findFirst().get()), 6);
-        valuesMap.put(sortString(values.stream().filter(s -> !valuesMap.containsKey((s)) && s.length() == 6 && allMatch(valuesMap, 7, s)).findFirst().get()), 9);
         valuesMap.put(sortString(values.stream().filter(s -> !valuesMap.containsKey((s)) && s.length() == 5 && allMatch(valuesMap, 1, s)).findFirst().get()), 3);
         valuesMap.put(sortString(values.stream().filter(s -> !valuesMap.containsKey((s)) && s.length() == 5 && findUnique(s, fromValue(valuesMap, 6)).size() == 1).findFirst().get()), 5);
         valuesMap.put(sortString(values.stream().filter(s -> !valuesMap.containsKey((s)) && s.length() == 5).findFirst().get()), 2);
+
+        //To check !
+        valuesMap.put(sortString(values.stream().filter(s -> !valuesMap.containsKey((s)) && s.length() == 6 && allMatch(valuesMap, 3, s)).findFirst().get()), 9);
         valuesMap.put(sortString(values.stream().filter(s -> !valuesMap.containsKey((s))).findFirst().get()), 0);
 
         return valuesMap;
