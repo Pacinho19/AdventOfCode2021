@@ -52,8 +52,9 @@ public class Day9Part2v2 implements CalculateI {
 
 
         HashSet<String> integers = new HashSet<>();
-        integers.add(row + "," + col);
-        basins.put(integers.stream().collect(Collectors.joining(";")), integers);
+        String myKey = row + "," + col;
+        integers.add(myKey);
+        basins.put(myKey, integers);
 
         List<String> newKeys = toIncluding.stream().filter(k1 -> basins.keySet().stream().anyMatch(k -> k.contains(k1))).collect(Collectors.toList());
         for (String newKey : newKeys) {
@@ -62,8 +63,9 @@ public class Day9Part2v2 implements CalculateI {
                 String fullKey2S = fullKey2.get();
                 integers.addAll(basins.get(fullKey2S));
                 basins.remove(fullKey2S);
-                basins.remove(row + "," + col);
-                basins.put(integers.stream().collect(Collectors.joining(";")), integers);
+                basins.remove(myKey);
+                myKey = integers.stream().collect(Collectors.joining(";"));
+                basins.put(myKey, integers);
             }
         }
 
