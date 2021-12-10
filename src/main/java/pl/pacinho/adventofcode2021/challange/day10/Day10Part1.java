@@ -16,7 +16,6 @@ public class Day10Part1 implements CalculateI {
         System.out.println(new Day10Part1().calculate("day10\\input.txt"));
     }
 
-
     private HashMap<Character, Long> pointsMap = new HashMap<Character, Long>() {
         {
             put(')', 3L);
