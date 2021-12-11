@@ -9,10 +9,6 @@ import java.util.stream.Collectors;
 
 public class Day10Part2 implements CalculateI {
 
-    public static void main(String[] args) {
-        System.out.println(new Day10Part2().calculate("day10\\input.txt"));
-    }
-
     private HashMap<Character, Long> pointsMap = new HashMap<Character, Long>() {
         {
             put('(', 1L);
@@ -22,6 +18,10 @@ public class Day10Part2 implements CalculateI {
         }
     };
 
+    public static void main(String[] args) {
+        System.out.println(new Day10Part2().calculate("day10\\input.txt"));
+    }
+
     @Override
     public long calculate(String filePath) {
         List<char[]> lines = FileUtils.readTxt(new File(filePath))
@@ -29,12 +29,9 @@ public class Day10Part2 implements CalculateI {
                 .map(String::toCharArray)
                 .collect(Collectors.toList());
 
-        List<List<Bracket>> notClosingLines = lines.stream()
+        List<Long> scores = lines.stream()
                 .map(this::getNotClosingBrackets)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-
-        List<Long> scores = notClosingLines.stream()
                 .map(this::calculateScore)
                 .sorted()
                 .collect(Collectors.toList());
