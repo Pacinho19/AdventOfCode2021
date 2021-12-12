@@ -1,12 +1,19 @@
 package pl.pacinho.adventofcode2021.challange.day12;
 
 import junit.framework.TestCase;
-import pl.pacinho.adventofcode2021.challange.day11.Day11Part1;
 
 public class Day12Part1Test extends TestCase {
 
     public void testCalculate() {
-        assertEquals(1656, new Day12Part1().calculate("day12\\inputExample.txt"));
-
+        assertEquals(10, new Day12Part1().calculate("day12\\inputExample.txt"));
     }
+
+    public void testCalculate2() {
+        assertEquals(19, new Day12Part1().calculate("day12\\inputExample2.txt"));
+    }
+
+    public void testCalculate3() {
+        assertEquals(226, new Day12Part1().calculate("day12\\inputExample3.txt"));
+    }
+
 }
