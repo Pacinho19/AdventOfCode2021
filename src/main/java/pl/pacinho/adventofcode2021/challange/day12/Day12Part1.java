@@ -62,9 +62,6 @@ public class Day12Part1 implements CalculateI {
         }
     }
 
-    private boolean isUpperCase(Path p) {
-        return Character.isUpperCase(p.getStart().toCharArray()[0]);
-    }
 
     private List<String> getLowerCase(String pathS) {
         return Arrays.stream(pathS.split("-"))
