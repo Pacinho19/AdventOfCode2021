@@ -4,10 +4,7 @@ import pl.pacinho.adventofcode2021.challange.CalculateI;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -37,27 +34,23 @@ public class Day14Part1 implements CalculateI {
             state = checkPoints(point);
         }
 
-
         char[] chars = state.toCharArray();
-        List<Integer> collect1 = IntStream
+        Collection<Long> collect1 = IntStream
                 .range(0, chars.length)
                 .mapToObj(i -> chars[i])
-                .collect(Collectors.groupingBy(Character::charValue))
-                .values()
-                .stream()
-                .map(List::size)
-                .collect(Collectors.toList());
-        return collect1.stream().max(Integer::compareTo).get() - collect1.stream().min(Integer::compareTo).get();
+                .collect(Collectors.groupingBy(e -> e, Collectors.counting()))
+                .values();
+        return collect1.stream().max(Long::compareTo).get() - collect1.stream().min(Long::compareTo).get();
     }
 
     private String checkPoints(List<String> point) {
-        return point.get(0).substring(0,1) + point.stream().map(s -> pairMap.get(s) + s.substring(1)).collect(Collectors.joining(""));
+        return point.get(0).substring(0, 1) + point.stream().map(s -> pairMap.get(s) + s.substring(1)).collect(Collectors.joining(""));
     }
 
     private List<String> pointsByState(String state) {
         List<String> out = new ArrayList<>();
         char[] chars = state.toCharArray();
-        for (int i = 0; i < chars.length-1; i += 1) {
+        for (int i = 0; i < chars.length - 1; i += 1) {
             out.add(state.substring(i, i + 2));
         }
         return out;
