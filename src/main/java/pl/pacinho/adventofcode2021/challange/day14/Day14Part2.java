@@ -4,16 +4,25 @@ import pl.pacinho.adventofcode2021.challange.CalculateI;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Day14Part2 implements CalculateI {
 
-    private Map<String, String> pairMap;
+    private Map<String, String> rules;
+    private Map<String, Long> pairs;
+
+    private int iteration;
+
+    public Day14Part2(int iteration) {
+        this.iteration = iteration;
+    }
 
     public static void main(String[] args) {
-        System.out.println(new Day14Part2().calculate("day14\\input.txt"));
+        System.out.println(new Day14Part2(40).calculate("day14\\input.txt"));
     }
 
     @Override
@@ -23,37 +32,56 @@ public class Day14Part2 implements CalculateI {
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
 
-        String state = lines.get(0);
-        pairMap = lines.subList(1, lines.size())
+        String template = lines.get(0);
+        rules = lines.subList(1, lines.size())
                 .stream()
                 .map(s -> s.split(" -> "))
                 .collect(Collectors.toMap(arr -> arr[0], arr -> arr[1]));
 
-        for (int i1 = 0; i1 < 10; i1++) {
-            List<String> point = pointsByState(state);
-            state =checkPoints(point);
-        }
+        initPairs(template);
 
-        char[] chars = state.toCharArray();
-        Collection<Long> collect1 = IntStream
-                .range(0, chars.length)
-                .mapToObj(i -> chars[i])
-                .collect(Collectors.groupingBy(e -> e, Collectors.counting()))
-                .values();
-        return collect1.stream().max(Long::compareTo).get() - collect1.stream().min(Long::compareTo).get();
+        IntStream.range(0, iteration)
+                .forEach(i -> {
+                    Map<String, Long> newPairs = new HashMap<>(pairs);
+                    pairs.forEach((pair, count) -> {
+                        String newPair = pair.substring(0, 1) + rules.get(pair);
+                        if (newPairs.containsKey(newPair)) newPairs.put(newPair, count + newPairs.get(newPair));
+                        else newPairs.put(newPair, count);
+
+                        String newPair2 = rules.get(pair) + pair.substring(1);
+                        if (newPairs.containsKey(newPair2)) newPairs.put(newPair2, count + newPairs.get(newPair2));
+                        else newPairs.put(newPair2, count);
+
+                        newPairs.put(pair, newPairs.get(pair) - count);
+                    });
+                    pairs = newPairs;
+                });
+
+        HashMap<String, Long> finalMap = new HashMap<>();
+        pairs.forEach((k, v) -> {
+            if (v < 0) return;
+            String split = k.split("")[0];
+            Long aLong = finalMap.get(split);
+            if (aLong == null) aLong = 0L;
+            finalMap.put(split, aLong + v);
+        });
+
+        String lastLetter = String.valueOf(template.charAt(template.length() - 1));
+        Long aLong = finalMap.get(lastLetter);
+        finalMap.put(lastLetter, aLong + 1);
+
+        return finalMap.values().stream().max(Long::compareTo).get() - finalMap.values().stream().min(Long::compareTo).get();
     }
 
-    private String checkPoints(List<String> point) {
-        return point.get(0).substring(0, 1) + point.stream().map(s -> pairMap.get(s) + s.substring(1)).collect(Collectors.joining(""));
-    }
-
-    private List<String> pointsByState(String state) {
-        List<String> out = new ArrayList<>();
-        char[] chars = state.toCharArray();
+    private void initPairs(String template) {
+        pairs = new HashMap<>();
+        char[] chars = template.toCharArray();
         for (int i = 0; i < chars.length - 1; i += 1) {
-            out.add(state.substring(i, i + 2));
+            String pair = template.substring(i, i + 2);
+            Long integer = pairs.get(pair);
+            if (integer == null) integer = 0L;
+            pairs.put(pair, integer + 1);
         }
-        return out;
     }
 
 }
