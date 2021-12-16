@@ -91,11 +91,11 @@ public class Day15Part1Dijkstry implements CalculateI {
         int row = Integer.parseInt(split[0]);
         int col = Integer.parseInt(split[1]);
 
-        if (row - 1 >= 0) out.add((row - 1) + "," + col);
+       // if (row - 1 >= 0) out.add((row - 1) + "," + col);
 
         if (row + 1 < board.length) out.add((row + 1) + "," + col);
 
-        if (col - 1 >= 0) out.add(row + "," + (col - 1));
+        //if (col - 1 >= 0) out.add(row + "," + (col - 1));
 
         if (col + 1 < board[row].length) out.add(row + "," + (col + 1));
 
