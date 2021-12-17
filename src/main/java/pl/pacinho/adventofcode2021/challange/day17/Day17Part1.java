@@ -1,6 +1,5 @@
 package pl.pacinho.adventofcode2021.challange.day17;
 
-import javafx.util.Pair;
 import pl.pacinho.adventofcode2021.challange.CalculateI;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
@@ -8,19 +7,15 @@ import java.io.File;
 
 public class Day17Part1 implements CalculateI {
 
-    public static void main(String[] args) {
-        System.out.println(new Day17Part1().calculate("day17\\input.txt"));
-    }
-
     private int targetXMin;
     private int targetXMax;
     private int targetYMin;
     private int targetYMax;
-
     private int maxY = Integer.MIN_VALUE;
 
-    private int outOfRange = 0;
-    private int outOfRange2 = 0;
+    public static void main(String[] args) {
+        System.out.println(new Day17Part1().calculate("day17\\input.txt"));
+    }
 
     @Override
     public long calculate(String filePath) {
@@ -31,18 +26,10 @@ public class Day17Part1 implements CalculateI {
         targetYMax = Integer.parseInt(info.split("y=.*\\.\\.")[1]);
 
 
-//        Integer localMax = checkTrajectory(0, 9, 0, 9, Integer.MIN_VALUE);
-
-        int row = 0;
-        while (outOfRange < targetXMax) {
-            outOfRange = 0;
-            int i = targetXMax;
-            outOfRange2 = 0;
-            while (outOfRange2 < targetXMax) {
-                checkTrajectory(row, i, row, i, Integer.MIN_VALUE);
-                i--;
+        for (int col = (int) Math.sqrt(targetXMin * 2); col <= targetXMax; col++) {
+            for (int row = 0; row <= Math.abs(targetYMin) + 1; row++) {
+                checkTrajectory(row, col, row, col, Integer.MIN_VALUE);
             }
-            row++;
         }
         return maxY;
     }
@@ -53,18 +40,12 @@ public class Day17Part1 implements CalculateI {
             if (localMax > maxY) maxY = localMax;
             return null;
         }
-        if (checkOutOfArea(row, col) || checkOutOfX(row, col) || checkOutOfY(row, col)) {
-            outOfRange++;
-            outOfRange2++;
-            return null;
-        }
 
+        if (checkOutOfArea(row, col) || checkOutOfY(row, col) || checkOutOfX(row, col)) return null;
 
         int rowChange = prevRow - 1;
-        int colChange = prevCol == 0 ? 0 : prevCol - 1;
-        checkTrajectory((row + rowChange), (col + colChange), rowChange, colChange, localMax);
-
-        return localMax;
+        int colChange = prevCol == 0 ? 0 : (prevCol < 0 ? prevCol + 1 : prevCol - 1);
+        return checkTrajectory((row + rowChange), (col + colChange), rowChange, colChange, localMax);
     }
 
     private boolean checkArea(int row, int col) {
