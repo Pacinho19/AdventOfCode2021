@@ -43,11 +43,9 @@ public class Day16Part2 implements CalculateI {
     @Override
     public long calculate(String filePath) {
         bits = Arrays.stream(FileUtils.readAsText(new File(filePath))
-                .split(""))
+                        .split(""))
                 .map(bitMap::get)
                 .collect(Collectors.joining(""));
-
-        System.out.println(bits);
 
         checkBits();
         return transmissions(main);
@@ -92,16 +90,16 @@ public class Day16Part2 implements CalculateI {
     private Packet checkBits() {
         if (bits.length() < 11) return main;
 
-        int version = getDecimal(bits.substring(0, 3));
-        int typeId = getDecimal(bits.substring(3, 6));
+        Long version = getDecimal(bits.substring(0, 3));
+        Long typeId = getDecimal(bits.substring(3, 6));
 
         Packet p = new Packet();
         if (main == null) {
             main = new Packet();
             p = main;
         }
-        p.setId(typeId);
-        p.setVersion(version);
+        p.setId(typeId.intValue());
+        p.setVersion(version.intValue());
 
         bits = bits.substring(6);
         if (typeId == 4) return checkTypeId4(p);
@@ -109,16 +107,16 @@ public class Day16Part2 implements CalculateI {
     }
 
     private Packet checkTypeOtherId(Packet packet) {
-        int digitAtPos = getDigitAtPos(bits, 0);
+        Long digitAtPos = getDigitAtPos(bits, 0);
         if (digitAtPos == 1) {
-            int count = getDecimal(bits.substring(1, 12));
+            Long count = getDecimal(bits.substring(1, 12));
             bits = bits.substring(12);
             for (int i = 0; i < count; i++) {
                 Packet packet1 = checkBits();
                 if (packet1 != null) packet.addSubPacket(packet1);
             }
         } else {
-            int length = getDecimal(bits.substring(1, 16));
+            Long length = getDecimal(bits.substring(1, 16));
             bits = bits.substring(16);
             String bits2 = bits;
             while (bits2.length() - bits.length() < length) {
@@ -133,28 +131,28 @@ public class Day16Part2 implements CalculateI {
         int pos = 0;
         StringBuilder number = new StringBuilder();
         while (!last) {
-            int digitAtPos = getDigitAtPos(bits, pos);
-            number.append(getDecimal(bits.substring(pos + 1, pos + 5)));
+            Long digitAtPos = getDigitAtPos(bits, pos);
+            number.append(bits, pos + 1, pos + 5);
             pos += 5;
             last = digitAtPos == 0;
         }
-        packet.setNumber(Long.parseLong(number.toString()));
+        packet.setNumber(getDecimal(number.toString()));
         bits = bits.substring(pos);
         return packet;
     }
 
-    private int getDecimal(String binary) {
-        int sum = 0;
+    private Long getDecimal(String binary) {
+        Long sum = 0L;
         int pos = 0;
         for (int i = binary.length() - 1; i >= 0; i--) {
-            sum += getDigitAtPos(binary, i) * Math.pow(2, pos);
+            sum += getDigitAtPos(binary, i) * (long) Math.pow(2, pos);
             pos++;
         }
         return sum;
     }
 
-    private int getDigitAtPos(String bits, int pos) {
-        return Integer.parseInt(String.valueOf(bits.charAt(pos)));
+    private Long getDigitAtPos(String bits, int pos) {
+        return Long.parseLong(String.valueOf(bits.charAt(pos)));
     }
 
 }

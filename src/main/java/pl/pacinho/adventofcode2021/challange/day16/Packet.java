@@ -13,10 +13,11 @@ public class Packet {
     private int version;
     private int id;
     private List<Packet> subPacket;
-    private long number;
+    private Long number;
 
     public Packet() {
         subPacket = new ArrayList<>();
+        number= 0L;
     }
 
     public void addSubPacket(Packet packet) {
