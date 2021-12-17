@@ -1,5 +1,6 @@
 package pl.pacinho.adventofcode2021.challange.day17;
 
+import javafx.util.Pair;
 import pl.pacinho.adventofcode2021.challange.CalculateI;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
@@ -18,6 +19,9 @@ public class Day17Part1 implements CalculateI {
 
     private int maxY = Integer.MIN_VALUE;
 
+    private int outOfRange = 0;
+    private int outOfRange2 = 0;
+
     @Override
     public long calculate(String filePath) {
         String info = FileUtils.readAsText(new File(filePath));
@@ -30,12 +34,13 @@ public class Day17Part1 implements CalculateI {
 //        Integer localMax = checkTrajectory(0, 9, 0, 9, Integer.MIN_VALUE);
 
         int row = 0;
-        int col = 0;
-        while (checkOutOfY(row, col)) {
-            col = 0;
-            while (checkOutOfX(row, col)) {
-                checkTrajectory(row, col, row, col, 0);
-                col++;
+        while (outOfRange < targetXMax) {
+            outOfRange = 0;
+            int i = targetXMax;
+            outOfRange2 = 0;
+            while (outOfRange2 < targetXMax) {
+                checkTrajectory(row, i, row, i, Integer.MIN_VALUE);
+                i--;
             }
             row++;
         }
@@ -44,12 +49,15 @@ public class Day17Part1 implements CalculateI {
 
     private Integer checkTrajectory(int row, int col, int prevRow, int prevCol, int localMax) {
         if (row > localMax) localMax = row;
-        System.out.println(col + "," + row);
         if (checkArea(row, col)) {
             if (localMax > maxY) maxY = localMax;
             return null;
         }
-        if (checkOutOfArea(row, col) || checkOutOfX(row, col) || checkOutOfY(row, col)) return null;
+        if (checkOutOfArea(row, col) || checkOutOfX(row, col) || checkOutOfY(row, col)) {
+            outOfRange++;
+            outOfRange2++;
+            return null;
+        }
 
 
         int rowChange = prevRow - 1;
