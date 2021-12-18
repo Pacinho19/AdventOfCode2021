@@ -41,7 +41,7 @@ public class Day17Part1 implements CalculateI {
             return null;
         }
 
-        if (checkOutOfArea(row, col) || checkOutOfY(row, col) || checkOutOfX(row, col)) return null;
+        if (checkOutOfArea(row, col)) return null;
 
         int rowChange = prevRow - 1;
         int colChange = prevCol == 0 ? 0 : (prevCol < 0 ? prevCol + 1 : prevCol - 1);
@@ -54,14 +54,7 @@ public class Day17Part1 implements CalculateI {
     }
 
     private boolean checkOutOfArea(int row, int col) {
-        return !(row >= targetYMax && col <= targetXMax);
-    }
-
-    private boolean checkOutOfX(int row, int col) {
-        return row < targetYMax && col < targetXMin;
-    }
-
-    private boolean checkOutOfY(int row, int col) {
-        return row > targetYMin && col > targetXMax;
+        if (col > targetXMax) return true;
+        return row < targetYMin;
     }
 }
