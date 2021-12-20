@@ -1,5 +1,6 @@
 package pl.pacinho.adventofcode2021.challange.day20;
 
+import javafx.util.Pair;
 import pl.pacinho.adventofcode2021.challange.CalculateI;
 import pl.pacinho.adventofcode2021.utils.FileUtils;
 
@@ -14,6 +15,8 @@ public class Day20Part1 implements CalculateI {
 
     private String algorithm;
 
+    //5141> - <5624
+    //5285?
     public static void main(String[] args) {
         System.out.println(new Day20Part1().calculate("day20\\input.txt"));
     }
@@ -46,18 +49,41 @@ public class Day20Part1 implements CalculateI {
 
         Character[][] characters = cloneArray(chars);
 
-        for (int row = 0; row < characters.length; row++) {
-            for (int col = 0; col < characters[row].length; col++) {
+        List<Pair<Integer, Integer>> pairs = checkMaxDim(characters);
+        Pair<Integer, Integer> min = pairs.get(0);
+        Pair<Integer, Integer> max = pairs.get(1);
 
-                if (row == 4 && col == 6) {
-                    int x = 0;
-                }
+        for (int row = 0; row < characters.length; row++) {
+            if(row<min.getValue() || row>max.getValue()) continue;
+
+            for (int col = 0; col < characters[row].length; col++) {
+                if(col<min.getKey() || col>max.getKey()) continue;
 
                 List<Character> neighbors = getNeighbors(row, col, characters);
-                chars[row][col] = checkNewValue(neighbors);
+                Character character = checkNewValue(neighbors);
+                chars[row][col] = character;
             }
         }
         printArray(chars);
+    }
+
+    private List<Pair<Integer, Integer>> checkMaxDim(Character[][] characters) {
+        int maxRow = 0;
+        int maxCol = 0;
+        int minRow = Integer.MAX_VALUE;
+        int minCol = Integer.MAX_VALUE;
+        for (int row = 0; row < characters.length; row++) {
+            for (int col = 0; col < characters[row].length; col++) {
+                if (characters[row][col] == '#') {
+                    if (row > maxRow) maxRow = row;
+                    if (col > maxCol) maxCol = col;
+
+                    if (row < minRow) minRow = row;
+                    if (col < minCol) minCol = col;
+                }
+            }
+        }
+        return Arrays.asList(new Pair<>(minCol-1, minRow-1), new Pair<>(maxCol+1, maxRow+1));
     }
 
     private Character[][] cloneArray(Character[][] chars) {
@@ -82,7 +108,8 @@ public class Day20Part1 implements CalculateI {
         String binary = neighbors.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(""));
-        return algorithm.charAt(getDecimal(binary));
+        int decimal = getDecimal(binary);
+        return algorithm.charAt(decimal);
     }
 
     private List<Character> getNeighbors(int row, int col, Character[][] chars) {
