@@ -12,12 +12,11 @@ import java.util.stream.IntStream;
 
 public class Day20Part1 implements CalculateI {
 
+    private String algorithm;
+
     public static void main(String[] args) {
         System.out.println(new Day20Part1().calculate("day20\\input.txt"));
     }
-
-
-    private String algorithm;
 
     @Override
     public long calculate(String filePath) {
@@ -41,20 +40,31 @@ public class Day20Part1 implements CalculateI {
         return Arrays.stream(chars)
                 .flatMap(Arrays::stream)
                 .filter(ch -> ch == '#').count();
-
     }
 
     private void enhancement(Character[][] chars) {
 
-        for (int row = 0; row < chars.length; row++) {
-            for (int col = 0; col < chars[row].length; col++) {
-                List<Character> neighbors = getNeighbors(row, col, chars);
-                if (neighbors.size() != 9) continue;
+        Character[][] characters = cloneArray(chars);
+
+        for (int row = 0; row < characters.length; row++) {
+            for (int col = 0; col < characters[row].length; col++) {
+
+                if (row == 4 && col == 6) {
+                    int x = 0;
+                }
+
+                List<Character> neighbors = getNeighbors(row, col, characters);
                 chars[row][col] = checkNewValue(neighbors);
             }
         }
-
         printArray(chars);
+    }
+
+    private Character[][] cloneArray(Character[][] chars) {
+        Character[][] characters = new Character[chars.length][chars[0].length];
+        for (int row = 0; row < chars.length; row++)
+            System.arraycopy(chars[row], 0, characters[row], 0, chars[row].length);
+        return characters;
     }
 
     private void printArray(Character[][] chars) {
@@ -90,7 +100,7 @@ public class Day20Part1 implements CalculateI {
         if (row + 1 < chars.length) out.add(chars[row + 1][col]);
         if (row + 1 < chars.length && col + 1 < chars[row].length) out.add(chars[row + 1][col + 1]);
 
-        return out.stream().anyMatch(ch -> ch == '#') ? out : new ArrayList<>();
+        return out;
     }
 
     private Character[][] extendArray(char[][] toArray) {
